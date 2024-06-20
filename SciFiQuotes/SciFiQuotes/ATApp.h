@@ -12,10 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ATApp : NSObject
 
-@property NSArray<ATQuote *> *quotes;
+@property NSMutableArray<ATQuote *> *quotes;
 
 - (instancetype)initWithFile: (NSString *)path;
-- (NSArray<ATQuote *> *)getQuotesFromLines: (NSArray<NSString *> *)lines;
 - (void)printQuote;
 
 @end

@@ -11,24 +11,32 @@
 
 - (instancetype)initWithFile:(NSString *)path {
 	if (self = [super init]) {
-		NSString *fileContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+		NSError *error;
+		
+		NSString *fileContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+		
+		if (error != nil) {
+			NSLog(@"Something went wrong");
+			exit(0);
+		}
 		
 		NSArray<NSString *> *lines = [fileContents componentsSeparatedByString:@"\n"];
-		self.quotes = [self getQuotesFromLines:lines];
+		
+		self.quotes = [NSMutableArray arrayWithCapacity:[lines count]];
+		[self getQuotesFromLines:lines];
 	}
 	
 	return self;
 }
 
-- (nonnull NSArray<ATQuote *> *)getQuotesFromLines:(nonnull NSArray<NSString *> *)lines {
-	NSMutableArray<ATQuote *> *quotes = [[NSMutableArray alloc] initWithCapacity:6];
-	
+- (void)getQuotesFromLines:(nonnull NSArray<NSString *> *)lines {
 	for (NSString *line in lines) {
 		ATQuote *quote = [[ATQuote alloc] initWithLine:line];
-		[quotes addObject:quote];
+		
+		if (quote != nil) {
+			[self.quotes addObject:quote];
+		}
 	}
-	
-	return quotes;
 }
 
 - (void)printQuote {

@@ -9,9 +9,13 @@
 
 @implementation ATQuote
 
-- (nonnull instancetype)initWithLine:(nonnull NSString *)line {
+- (instancetype)initWithLine:(nonnull NSString *)line {
 	if (self = [super init]) {
 		NSArray<NSString *> *components = [line componentsSeparatedByString:@"/"];
+		
+		if ([components count] != 2) {
+			return nil;
+		}
 		
 		self.quote = components[0];
 		self.author = components[1];

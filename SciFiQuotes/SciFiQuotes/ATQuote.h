@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString* quote;
 @property NSString* author;
 
-- (instancetype)initWithLine: (NSString *)line;
+- (nullable instancetype)initWithLine: (NSString *)line;
 
 @end
 
